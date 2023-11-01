@@ -7,7 +7,6 @@ import {
   Button,
 } from "@mui/material";
 
-
 // {
 // "id": 2,
 // "title": "iPhone X",
@@ -27,25 +26,23 @@ import {
 // ]
 // }
 
-
-
 // likely to have a state that is in the redux state
 function Cart({ open, handleClose, cartItems }) {
-const total = cartItems.reduce((acc, item) => acc + item.price, 0);
+  // const total = cartItems.reduce((acc, item) => acc + item.price, 0);
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Checkout</DialogTitle>
       <DialogContent>
         {/* Display cart items */}
-        {cartItems.map((item, index) => (
+        {/* {cartItems.map((item, index) => (
           <div key={index}>
             <p>
               {item.name}: ${item.price.toFixed(2)}
             </p>
           </div>
-        ))}
+        ))} */}
         <hr />
-        <p>Total: ${total.toFixed(2)}</p>
+        {/* <p>Total: ${total.toFixed(2)}</p> */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">

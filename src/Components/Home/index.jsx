@@ -1,5 +1,6 @@
-import React from 'react'
-
+import React from "react";
+import Header from "../Header";
+import Products from "../Products";
 // {
 // "id": 2,
 // "title": "iPhone X",
@@ -19,19 +20,13 @@ import React from 'react'
 // ]
 // }
 
-function Products() {
+function Home() {
   return (
-    <Card variant="outlined" style={{ maxWidth: 300 }}>
-    <CardContent>
-      <Typography variant="h5" component="div" gutterBottom>
-        {title}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {content}
-      </Typography>
-    </CardContent>
-  </Card>
-  )
+    <>
+      <Header />
+      <Products />
+    </>
+  );
 }
 
-export default Products
+export default Home;

@@ -1,7 +1,7 @@
-import React from "react";
-import {Drawer, Button} from '@mui/material';
+import React, { useState } from "react";
+import { Drawer, Button } from "@mui/material";
 
-function SettingsSideBar() {
+function Settings() {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (isOpen) => (event) => {
@@ -36,4 +36,4 @@ function SettingsSideBar() {
   );
 }
 
-export default SettingsSideBar;
+export default Settings;

@@ -1,17 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import Home from './Home'
-import './App.css'
+import { useState } from "react";
+import { ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import Home from "./Components/Home";
+import dark from "./Components/Themes/dark";
+import light from "./Components/Themes/light";
+import {Provider} from "react-redux";
+import {store} from "./store/index";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-    <Home/>
+      <ThemeProvider theme={light}>
+        <CssBaseline />
+        <Provider store={store}>
+        <Home />
+        </Provider>
+      </ThemeProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
