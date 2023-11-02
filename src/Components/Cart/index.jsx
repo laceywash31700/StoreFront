@@ -17,12 +17,14 @@ import {
 
 function Cart({ open, handleClose }) {
   const cartItems = useSelector((state) => state.cart.cart);
-
+  const total = cartItems.reduce((acc, item) => acc + item.price, 0);
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Checkout</DialogTitle>
       <DialogContent>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        >
           {cartItems.map((item, index) => (
             <React.Fragment key={index}>
               <ListItem alignItems="flex-start">
@@ -33,13 +35,22 @@ function Cart({ open, handleClose }) {
                   primary={item.title}
                   secondary={item.description}
                 />
+                <Typography
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  Price: ${item.price.toFixed(2)}
+                </Typography>
               </ListItem>
               <Divider variant="inset" component="li" />
             </React.Fragment>
           ))}
         </List>
         <hr />
-        {/* Calculate total and display it here if needed */}
+        <Typography variant="h6" gutterBottom>
+          Total: ${total.toFixed(2)}
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
