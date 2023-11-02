@@ -1,48 +1,45 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Divider,
+  Typography,
 } from "@mui/material";
 
-// {
-// "id": 2,
-// "title": "iPhone X",
-// "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-// "price": 899,
-// "discountPercentage": 17.94,
-// "rating": 4.44,
-// "stock": 34,
-// "brand": "Apple",
-// "category": "smartphones",
-// "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-// "images": [
-//   "https://i.dummyjson.com/data/products/2/1.jpg",
-//   "https://i.dummyjson.com/data/products/2/2.jpg",
-//   "https://i.dummyjson.com/data/products/2/3.jpg",
-//   "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-// ]
-// }
+function Cart({ open, handleClose }) {
+  const cartItems = useSelector((state) => state.cart.cart);
 
-// likely to have a state that is in the redux state
-function Cart({ open, handleClose, cartItems }) {
-  // const total = cartItems.reduce((acc, item) => acc + item.price, 0);
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Checkout</DialogTitle>
       <DialogContent>
-        {/* Display cart items */}
-        {/* {cartItems.map((item, index) => (
-          <div key={index}>
-            <p>
-              {item.name}: ${item.price.toFixed(2)}
-            </p>
-          </div>
-        ))} */}
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          {cartItems.map((item, index) => (
+            <React.Fragment key={index}>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt={item.title} src={item.thumbnail} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={item.title}
+                  secondary={item.description}
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </React.Fragment>
+          ))}
+        </List>
         <hr />
-        {/* <p>Total: ${total.toFixed(2)}</p> */}
+        {/* Calculate total and display it here if needed */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
