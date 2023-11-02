@@ -1,21 +1,29 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Home from "./Components/Home";
+import Home from "./Home";
 import dark from "./Components/Themes/dark";
 import light from "./Components/Themes/light";
-import {Provider} from "react-redux";
-import {store} from "./store/index";
+import { Provider } from "react-redux";
+import { store } from "./store/index";
+
+export const ThemeContext = React.createContext({});
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState(light);
 
   return (
     <>
       <ThemeProvider theme={light}>
-        <CssBaseline />
         <Provider store={store}>
-        <Home />
+          <ThemeContext.Provider
+            value={{
+              toggleTheme: () => setTheme(theme === light ? dark : light),
+            }}
+          >
+            <CssBaseline />
+            <Home />
+          </ThemeContext.Provider>
         </Provider>
       </ThemeProvider>
     </>

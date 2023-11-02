@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "../Header";
-import Products from "../Products";
+import React, { useState } from "react";
+import Header from "../Components/Header";
+import Products from "../Components/Products";
 // {
 // "id": 2,
 // "title": "iPhone X",
@@ -20,11 +20,23 @@ import Products from "../Products";
 // ]
 // }
 
+export const ProductContext = React.createContext({});
+
 function Home() {
+  const [sortWord, setSortWord] = useState("all");
+  const [displayCount, setDisplayCount] = useState(8);
+
   return (
     <>
-      <Header />
-      <Products />
+      <ProductContext.Provider value={{
+        displayCount,
+        setDisplayCount,
+        sortWord,
+        setSortWord
+      }}>
+        <Header />
+        <Products />
+      </ProductContext.Provider>
     </>
   );
 }

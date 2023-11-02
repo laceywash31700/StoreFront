@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { Select, MenuItem, FormControl } from "@mui/material";
+import { ProductContext } from "../../Home";
+
+
 
 function Search() {
-  const [selectedValue, setSelectedValue] = useState("");
+  const { sortWord, setSortWord } = useContext(ProductContext);
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    setSortWord(event.target.value);
   };
+
+  useEffect(() => {
+    console.log('Updated sortWord:', sortWord);
+  }, [sortWord]); 
+
 
   return (
     <FormControl fullWidth variant="outlined" style={{ marginBottom: "20px" }}>
-      <Select
-        value={selectedValue}
-        onChange={handleChange}
-        label="Select an option"
-      >
-        <MenuItem value="">None</MenuItem>
-        <MenuItem value="option1">electronics</MenuItem>
-        <MenuItem value="option2">food</MenuItem>
-        <MenuItem value="option3">Health & Beauty</MenuItem>
+      <Select value={sortWord} onChange={handleChange} label="Select an option">
+        <MenuItem value="all">All</MenuItem>
+        <MenuItem value="electronics">Electronics</MenuItem>
+        <MenuItem value="food">Food</MenuItem>
+        <MenuItem value="health">Health & Beauty</MenuItem>
+        <MenuItem value="home">Home & Decor</MenuItem>
       </Select>
     </FormControl>
   );
