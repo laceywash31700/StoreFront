@@ -23,7 +23,7 @@ import Products from "../Components/Products";
 export const ProductContext = React.createContext({});
 
 function Home() {
-  const [sortWord, setSortWord] = useState("");
+  const [sortWord, setSortWord] = useState("all");
   const [displayCount, setDisplayCount] = useState(8);
 
   return (
