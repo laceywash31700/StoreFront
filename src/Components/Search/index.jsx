@@ -2,8 +2,6 @@ import React, { useEffect, useContext } from "react";
 import { Select, MenuItem, FormControl } from "@mui/material";
 import { ProductContext } from "../../Home";
 
-// displayCount,
-// setDisplayCount,
 
 
 function Search() {
