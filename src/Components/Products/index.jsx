@@ -1,40 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, CardContent, Typography, Grid, Button } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import productsSlice from "../../store/products";
 import cartSlice from "../../store/cart";
-
-// {
-// "id": 2,
-// "title": "iPhone X",
-// "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-// "price": 899,
-// "discountPercentage": 17.94,
-// "rating": 4.44,
-// "stock": 34,
-// "brand": "Apple",
-// "category": "smartphones",
-// "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-// "images": [
-//   "https://i.dummyjson.com/data/products/2/1.jpg",
-//   "https://i.dummyjson.com/data/products/2/2.jpg",
-//   "https://i.dummyjson.com/data/products/2/3.jpg",
-//   "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-// ]
-// }
+import { ProductContext } from "../../Home";
 
 function Products() {
+  const category = new Map();
+
+  category.set("food", ["groceries"]);
+  category.set("home", ["home-decoration"]);
+  category.set("health", ["fragrances", "skincare"]);
+  category.set("electronics", ["smartphones", "laptops"]);
+  category.set("all", [
+    "smartphones",
+    "laptops",
+    "fragrances",
+    "skincare",
+    "groceries",
+    "home-decoration",
+  ]);
+  const { sortWord } = useContext(ProductContext);
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 
   const handleAddToCart = (product) => {
     dispatch(cartSlice.actions.addtoCart(product));
-  }
-  
+  };
+
+  const filteredProducts = products.filter((product) => {
+    let allowedCategories = category.get(sortWord);
+    return allowedCategories && allowedCategories.includes(product.category);
+  });
+
   return (
     <Grid container spacing={2}>
-      {products.map((product, index) => (
+      {filteredProducts.map((product, index) => (
         <Grid item xs={3} key={index}>
           <Card
             variant="outlined"
