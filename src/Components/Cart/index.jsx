@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Dialog,
   DialogTitle,
@@ -14,10 +14,14 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import cartSlice from "../../store/cart";
 
 function Cart({ open, handleClose }) {
   const cartItems = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
+  const handleRemoveFromCart = (id) => {dispatch(cartSlice.actions.removeFromCart(id));}
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Checkout</DialogTitle>
@@ -42,12 +46,21 @@ function Cart({ open, handleClose }) {
                 >
                   Price: ${item.price.toFixed(2)}
                 </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleRemoveFromCart(item.id)} // Call a function to remove item from cart
+                >
+                  Remove
+                </Button>
               </ListItem>
               <Divider variant="inset" component="li" />
             </React.Fragment>
           ))}
         </List>
+
         <hr />
+
         <Typography variant="h6" gutterBottom>
           Total: ${total.toFixed(2)}
         </Typography>

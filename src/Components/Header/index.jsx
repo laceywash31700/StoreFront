@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Cart from "../Cart";
 import Search from "../Search";
 import Login from "../Login";
+import { Button } from "@mui/material";
 import Settings from "../Settings/Index";
 
 const Header = () => {
@@ -22,7 +23,7 @@ const Header = () => {
       <div style={{ padding: "20px" }}>
         <h1>Shopping Cart</h1>
         {/* Display cart items here */}
-        <button onClick={handleModalOpen}>Open Checkout</button>
+        <Button onClick={handleModalOpen}>Open Checkout</Button>
         <Cart open={isModalOpen} handleClose={handleModalClose} />
       </div>
     </>
