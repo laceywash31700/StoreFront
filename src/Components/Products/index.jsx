@@ -4,11 +4,12 @@ import { Card, CardContent, Typography, Grid, Button, Pagination } from "@mui/ma
 import Carousel from "react-material-ui-carousel";
 import cartSlice from "../../store/cart";
 import { ProductContext } from "../../Home";
+import {updateProduct} from "../../store/products";
 
 
 function Products() {
  
-  const { sortWord, displayCount } = useContext(ProductContext);
+  const { displayCount } = useContext(ProductContext);
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 
@@ -23,18 +24,16 @@ function Products() {
     return startIdx + displayCount;
   }, [startIdx, displayCount]);
 
-  const filteredProducts = products.filter((product) => {
-    let allowedCategories = category.get(sortWord);
-    return allowedCategories && allowedCategories.includes(product.category);
-  });
+  
 
   useEffect(() => {
-    let pages = Math.floor(filteredProducts.length / displayCount);
-    pages += filteredProducts.length % displayCount !== 0 ? 1 : 0;
+    let pages = Math.floor(products.length / displayCount);
+    pages += products.length % displayCount !== 0 ? 1 : 0;
     setCount(pages);
-  }, [displayCount, filteredProducts]);
+  }, [displayCount, products]);
 
   const handleAddToCart = (product) => {
+    dispatch(updateProduct({ product, amount: 1 } ))
     dispatch(cartSlice.actions.addtoCart(product));
   };
 
@@ -45,7 +44,7 @@ function Products() {
   return (
     <>
       <Grid container spacing={2}>
-        {filteredProducts.slice(startIdx, endIdx).map((product, index) => (
+        {products.slice(startIdx, endIdx).map((product, index) => (
           <Grid item xs={3} key={index}>
             <Card
               variant="outlined"

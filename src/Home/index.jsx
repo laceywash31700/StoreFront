@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../Components/Header";
 import Products from "../Components/Products";
+
 // {
 // "id": 2,
 // "title": "iPhone X",
@@ -23,7 +24,6 @@ import Products from "../Components/Products";
 export const ProductContext = React.createContext({});
 
 function Home() {
-  const [sortWord, setSortWord] = useState("all");
   const [displayCount, setDisplayCount] = useState(8);
 
   return (
@@ -31,8 +31,6 @@ function Home() {
       <ProductContext.Provider value={{
         displayCount,
         setDisplayCount,
-        sortWord,
-        setSortWord
       }}>
         <Header />
         <Products />
