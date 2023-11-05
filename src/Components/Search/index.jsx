@@ -1,29 +1,33 @@
 import React, { useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Select, MenuItem, FormControl } from "@mui/material";
-import { ProductContext } from "../../Home";
-
-
+import categorySlice from "../../store/category";
+import { getProducts } from "../../store/products";
 
 function Search() {
-  const { sortWord, setSortWord } = useContext(ProductContext);
+  const categories = useSelector((state) => state.category.categories);
+  const selectedCategory = useSelector((state) => state.category.selectedCategory);
+  const selectedSubCategory = useSelector((state) => state.category.selectedSubCategory)
+  const subCategories = categories[selectedCategory] || []; 
+  const dispatch = useDispatch();
+;
 
+  
   const handleChange = (event) => {
-    setSortWord(event.target.value);
+    dispatch(categorySlice.actions.changeSubCategory(event.target.value));
   };
 
   useEffect(() => {
-    console.log('Updated sortWord:', sortWord);
-  }, [sortWord]); 
+    dispatch(getProducts({ category: selectedCategory, subCategory: selectedSubCategory }));
+  }, [selectedCategory,selectedSubCategory]);
+
 
 
   return (
     <FormControl fullWidth variant="outlined" style={{ marginBottom: "20px" }}>
-      <Select value={sortWord} onChange={handleChange} label="Select an option">
-        <MenuItem value="all">All</MenuItem>
-        <MenuItem value="electronics">Electronics</MenuItem>
-        <MenuItem value="food">Food</MenuItem>
-        <MenuItem value="health">Health & Beauty</MenuItem>
-        <MenuItem value="home">Home & Decor</MenuItem>
+
+      <Select value={'all'} onChange={handleChange} label="Select an option">
+        {subCategories.map((subCategory) => <MenuItem key={subCategory}value={subCategory}>{subCategory}</MenuItem>)}
       </Select>
     </FormControl>
   );

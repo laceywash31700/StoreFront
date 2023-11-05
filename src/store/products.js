@@ -1,40 +1,53 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import data from "../assets/data/data.json";
 
 const url = import.meta.env.VITE_API_URL;
 
 export const getProducts = createAsyncThunk(
-  "GET/products",
-  async (category) => {
-    let config = { baseURL: `${url}`, method: "get" };
-    if (category === "all") {
-      config.url = `/products`;
-    } else {
-      config.url = `/products/category/${category}`;
+  "products/getProducts",
+  async ({ category, subCategory }, { rejectWithValue }) => {
+    try {
+      let config = {
+        baseURL: url,
+        method: "get",
+      };
+      if (category === "All Products") {
+        config.url = "/products";
+      } else {
+        config.url = `/products/category/${subCategory}`;
+      }
+      const response = await axios(config);
+      return response.data.products;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
-    let response = await axios(config);
-    return response.data.products;
   }
 );
+
 
 export const updateProduct = createAsyncThunk(
-  "PUT/product/:id",
-  async ( product, amount ) => {
-    const updatedProduct = { ...product, stock: (product.stock - amount) };
-    const config = {
-      baseURL: `${url}`,
-      url: `/products/${product.id}`,
-      method: `post`,
-      header: { "Content-Type": "application/json" },
-      data: updatedProduct,
-    };
-    let response = await axios(config);
-    return response.data;
+  "products/updateProduct",
+  async ({ product, amount }) => {
+    try {
+      const updatedStock = (product.stock - amount);
+      console.log(updatedStock);
+      let config = {
+        baseURL: url,
+        method: "put",
+        url:`/products/${product.id}`,
+        header:  { 'Content-Type': 'application/json'},
+        data: { stock: updatedStock }
+      };
+      
+      const response = await axios(config);
+      console.log(response.data); 
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 
-// const products = data.products;
 
 const productsSlice = createSlice({
   name: "products",
