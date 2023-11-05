@@ -5,28 +5,15 @@ import Carousel from "react-material-ui-carousel";
 import cartSlice from "../../store/cart";
 import { ProductContext } from "../../Home";
 
+
 function Products() {
-  const category = new Map();
-
-  category.set("food", ["groceries"]);
-  category.set("home", ["home-decoration"]);
-  category.set("health", ["fragrances", "skincare"]);
-  category.set("electronics", ["smartphones", "laptops"]);
-  category.set("all", [
-    "smartphones",
-    "laptops",
-    "fragrances",
-    "skincare",
-    "groceries",
-    "home-decoration",
-  ]);
-
+ 
   const { sortWord, displayCount } = useContext(ProductContext);
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); 
 
   const startIdx = useMemo(() => {
     return (page - 1) * displayCount;
