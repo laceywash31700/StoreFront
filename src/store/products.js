@@ -5,8 +5,7 @@ const url = import.meta.env.VITE_API_URL;
 
 export const getProducts = createAsyncThunk(
   "products/getProducts",
-  async ({ category, subCategory }, { rejectWithValue }) => {
-    try {
+  async ({ category, subCategory }) => {
       let config = {
         baseURL: url,
         method: "get",
@@ -18,10 +17,7 @@ export const getProducts = createAsyncThunk(
       }
       const response = await axios(config);
       return response.data.products;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
+    } 
 );
 
 
@@ -38,7 +34,6 @@ export const updateProduct = createAsyncThunk(
         header:  { 'Content-Type': 'application/json'},
         data: { stock: updatedStock }
       };
-      
       const response = await axios(config);
       console.log(response.data); 
       return response.data;

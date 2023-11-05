@@ -2,10 +2,6 @@ import React, { useState , useContext} from "react";
 import { Drawer, Button } from "@mui/material";
 import { ProductContext } from "../../Home";
 
-// displayCount,
-// setDisplayCount,
-
-
 function Settings() {
   const [open, setOpen] = useState(false);
   const { displayCount, setDisplayCount } = useContext(ProductContext);
