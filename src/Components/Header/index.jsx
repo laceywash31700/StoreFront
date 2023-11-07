@@ -11,8 +11,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const categories = useSelector((state) => state.category.categories);
+  const cartItems = useSelector((state) => state.cart.cart);
   const buttons = Object.keys(categories);
   const dispatch = useDispatch();
+  const totalItems = cartItems.length;
 
   const handleChange = (cat) => {
     dispatch(categorySlice.actions.changeCategory(cat));
@@ -40,6 +42,7 @@ const Header = () => {
           <Login />
           <Button onClick={handleModalOpen}>
             <ShoppingCartIcon style={{ fontSize: 36 }} />
+            {totalItems > 0 && <span style={{ marginLeft: "5px" }}>{totalItems}</span>}
           </Button>
         </div>
       </div>
