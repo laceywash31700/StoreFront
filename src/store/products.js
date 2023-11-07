@@ -23,24 +23,21 @@ export const getProducts = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
-  async ({ product, amount }) => {
-    try {
-      const updatedStock = (product.stock - amount);
+  async ({ product, quantity }) => {
+      const updatedStock = (product.stock - quantity);
+      const item = (product.quantity + quantity)
       console.log(updatedStock);
       let config = {
         baseURL: url,
         method: "put",
         url:`/products/${product.id}`,
         header:  { 'Content-Type': 'application/json'},
-        data: { stock: updatedStock }
+        data: { stock: updatedStock, quantity: item }
       };
       const response = await axios(config);
       console.log(response.data); 
       return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
+    } 
 );
 
 

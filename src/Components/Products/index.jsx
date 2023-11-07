@@ -33,9 +33,11 @@ function Products() {
   }, [displayCount, products]);
 
   const handleAddToCart = (product) => {
-    dispatch(updateProduct({ product, amount: 1 } ))
-    dispatch(cartSlice.actions.addtoCart(product));
-  };
+    dispatch(updateProduct({ product, quantity: 1 }));
+    console.log(product);
+    dispatch(cartSlice.actions.addtoCart({ ...product, quantity: 1 }));
+};
+
 
   const handleChange = (e, page) => {
     setPage(page);

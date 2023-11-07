@@ -1,6 +1,8 @@
 import React, { useState , useContext} from "react";
 import { Drawer, Button } from "@mui/material";
 import { ProductContext } from "../../Home";
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+
 
 function Settings() {
   const [open, setOpen] = useState(false);
@@ -19,10 +21,10 @@ function Settings() {
   return (
     <div>
       <Button variant="outlined" onClick={toggleDrawer(true)}>
-        Open Settings
+       <DensityMediumIcon/>
       </Button>
       <Drawer
-        anchor="right"
+        anchor="left"
         open={open}
         onClose={toggleDrawer(false)}
         ModalProps={{

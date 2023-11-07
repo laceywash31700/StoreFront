@@ -19,7 +19,9 @@ import cartSlice from "../../store/cart";
 function Cart({ open, handleClose }) {
   const cartItems = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-  const handleRemoveFromCart = (id) => {dispatch(cartSlice.actions.removeFromCart(id));}
+  const handleRemoveFromCart = (id, quantity) => {
+    dispatch(cartSlice.actions.removeFromCart({ id, quantity }));
+  };
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
 
   return (
@@ -38,18 +40,15 @@ function Cart({ open, handleClose }) {
                 <ListItemText
                   primary={item.title}
                   secondary={item.description}
-                />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
+                  secondaryTypographyProps={{ component: "div" }}
                 >
+                  Quantity: {item.quantity} <br />
                   Price: ${item.price.toFixed(2)}
-                </Typography>
+                </ListItemText>
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => handleRemoveFromCart(item.id)} // Call a function to remove item from cart
+                  onClick={() => handleRemoveFromCart(item.id, 1)}
                 >
                   Remove
                 </Button>
