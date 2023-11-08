@@ -1,20 +1,26 @@
-import React, { useState, useMemo, useEffect,useContext } from "react";
+import React, { useState, useMemo, useEffect, useContext } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, CardContent, Typography, Grid, Button, Pagination } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Button,
+  Pagination,
+} from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import cartSlice from "../../store/cart";
 import { ProductContext } from "../../Home";
-import {updateProduct} from "../../store/products";
-
+import { updateProduct } from "../../store/products";
 
 function Products() {
- 
   const { displayCount } = useContext(ProductContext);
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(1);
 
   const startIdx = useMemo(() => {
     return (page - 1) * displayCount;
@@ -23,8 +29,6 @@ function Products() {
   const endIdx = useMemo(() => {
     return startIdx + displayCount;
   }, [startIdx, displayCount]);
-
-  
 
   useEffect(() => {
     let pages = Math.floor(products.length / displayCount);
@@ -36,8 +40,7 @@ function Products() {
     dispatch(updateProduct({ product, quantity: 1 }));
     console.log(product);
     dispatch(cartSlice.actions.addtoCart({ ...product, quantity: 1 }));
-};
-
+  };
 
   const handleChange = (e, page) => {
     setPage(page);
@@ -75,14 +78,8 @@ function Products() {
                 <Typography variant="h5" component="div" gutterBottom>
                   {product.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {product.description}
-                </Typography>
                 <Typography variant="h6" gutterBottom>
                   Price: ${product.price.toFixed(2)}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Rating: {product.rating}
                 </Typography>
                 <Button
                   variant="contained"
@@ -91,6 +88,14 @@ function Products() {
                 >
                   Add to Cart
                 </Button>
+                <Link to={`/products/${product.id}`}>
+                  <Button>Product Details</Button>
+                </Link>
+                <Switch>
+                  <Route path="/products/:productId">
+                    <ProductDetails />
+                  </Route>
+                </Switch>
               </CardContent>
             </Card>
           </Grid>
@@ -101,7 +106,7 @@ function Products() {
       >
         Page: {page}
       </Typography>
-      <Pagination 
+      <Pagination
         sx={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
         count={count}
         variant="outlined"

@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import cartSlice from "../../store/cart";
-
+``
 function Cart({ open, handleClose }) {
   const cartItems = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
