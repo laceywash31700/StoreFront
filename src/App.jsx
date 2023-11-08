@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Routes , Route} from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import ProductDetails from "./Components/ProductDeatails/index";
 import Home from "./Home";
 import dark from "./Components/Themes/dark";
 import light from "./Components/Themes/light";
@@ -23,7 +24,10 @@ function App() {
             }}
           >
             <CssBaseline />
-            <Home />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products/:productId" element={<ProductDetails />} />
+            </Routes>
           </ThemeContext.Provider>
         </ThemeProvider>
       </Provider>

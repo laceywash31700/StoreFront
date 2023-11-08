@@ -63,8 +63,8 @@ function ProductDetails() {
         >
           Add to Cart
         </Button>
-        <Link to="/products">
-          <Button variant="outlined">Back to Products</Button>
+        <Link to="/">
+          <Button variant="contained"  color="primary">Back to Products</Button>
         </Link>
       </CardContent>
     </div>
