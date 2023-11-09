@@ -41,7 +41,7 @@ const Header = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Login />
           <Button onClick={handleModalOpen}>
-            <Badge badgeContent={totalItems} color="primary">
+            <Badge badgeContent={totalItems} color="secondary">
             <ShoppingCartIcon style={{ fontSize: 36 }} />
             {/* {totalItems > 0 && <span style={{ marginLeft: "5px" }}>{totalItems}</span>} */}
             </Badge>
