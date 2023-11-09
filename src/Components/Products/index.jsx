@@ -14,9 +14,16 @@ import cartSlice from "../../store/cart";
 import { ProductContext } from "../../Home";
 import { updateProduct } from "../../store/products";
 
+// { (selectedCategory === "all" && !products.length) ? :
 function Products() {
   const { displayCount } = useContext(ProductContext);
   const products = useSelector((state) => state.products.products);
+  const categories = useSelector((state) => state.category.categories);
+  const selectedCategory = useSelector(
+    (state) => state.category.selectedCategory
+  );
+  const image = categories[selectedCategory].image;
+  const description = categories[selectedCategory].description;
   const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
@@ -46,73 +53,98 @@ function Products() {
     setPage(page);
   };
 
+  const productAdvertisement = (
+    <div style={{ display: "flex", textAlign: "center", padding: "20px" }}>
+      <img
+        src={image}
+        alt={selectedCategory}
+        style={{ maxWidth: "100%", maxHeight: "400px", objectFit: "cover" }}
+      />
+
+      <Typography variant="body1">
+        <Typography variant="h4" gutterBottom>
+          {selectedCategory}
+        </Typography>
+        {description}
+      </Typography>
+    </div>
+  );
+
   return (
     <>
-      <Grid container spacing={2}>
-        {products.slice(startIdx, endIdx).map((product, index) => (
-          <Grid item xs={3} key={index}>
-            <Card
-              variant="outlined"
-              style={{ marginBottom: "10px", width: "100%" }}
-              sx={{
-                border: "2px solid #ccc",
-                borderRadius: "4px",
-                padding: "10px",
-              }}
-            >
-              <Carousel style={{ width: "100%", overflow: "hidden" }}>
-                {product.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Product ${index}`}
-                    style={{
-                      width: "100%",
-                      maxHeight: "200px",
-                      objectFit: "cover",
-                    }}
-                  />
-                ))}
-              </Carousel>
-              <CardContent>
-                <Typography variant="h5" component="div" gutterBottom>
-                  {product.title}
-                </Typography>
-                <Typography variant="h6" gutterBottom>
-                  Price: ${product.price.toFixed(2)}
-                </Typography>
-                <div style={{ display: "flex", padding: "10px" }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleAddToCart(product)}
-                    style={{ marginRight: "10px" }}
-                  >
-                    Add to Cart
-                  </Button>
-                  <Link to={`/products/${product.id}`}>
-                    <Button variant="contained" color="primary">
-                      Product Details
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+      {products.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          {productAdvertisement}
+        </div>
+      ) : (
+        <>
+          <Grid container spacing={2}>
+            {products.slice(startIdx, endIdx).map((product, index) => (
+              <Grid item xs={3} key={index}>
+                <Card
+                  variant="outlined"
+                  style={{ marginBottom: "10px", width: "100%" }}
+                  sx={{
+                    border: "2px solid #ccc",
+                    borderRadius: "4px",
+                    padding: "10px",
+                  }}
+                >
+                  <Carousel style={{ width: "100%", overflow: "hidden" }}>
+                    {product.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Product ${index}`}
+                        style={{
+                          width: "100%",
+                          maxHeight: "200px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ))}
+                  </Carousel>
+                  <CardContent>
+                    <Typography variant="h5" component="div" gutterBottom>
+                      {product.title}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      Price: ${product.price.toFixed(2)}
+                    </Typography>
+                    <div style={{ display: "flex", padding: "10px" }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleAddToCart(product)}
+                        style={{ marginRight: "10px" }}
+                      >
+                        Add to Cart
+                      </Button>
+                      <Link to={`/products/${product.id}`}>
+                        <Button variant="contained" color="primary">
+                          Product Details
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Typography
-        sx={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        Page: {page}
-      </Typography>
-      <Pagination
-        sx={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-        count={count}
-        variant="outlined"
-        color="primary"
-        onChange={handleChange}
-      />
+          <Typography
+            sx={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
+          >
+            Page: {page}
+          </Typography>
+          <Pagination
+            sx={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
+            count={count}
+            variant="outlined"
+            color="primary"
+            onChange={handleChange}
+          />
+        </>
+      )}
     </>
   );
 }
