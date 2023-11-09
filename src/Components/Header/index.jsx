@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Cart from "../Cart";
 import Search from "../Search";
 import Login from "../Login";
-import { Button } from "@mui/material";
+import { Button, Badge } from "@mui/material";
 import Settings from "../Settings/Index";
 import categorySlice from "../../store/category";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -41,8 +41,10 @@ const Header = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Login />
           <Button onClick={handleModalOpen}>
+            <Badge badgeContent={totalItems} color="primary">
             <ShoppingCartIcon style={{ fontSize: 36 }} />
-            {totalItems > 0 && <span style={{ marginLeft: "5px" }}>{totalItems}</span>}
+            {/* {totalItems > 0 && <span style={{ marginLeft: "5px" }}>{totalItems}</span>} */}
+            </Badge>
           </Button>
         </div>
       </div>

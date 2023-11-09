@@ -9,7 +9,7 @@ function Search() {
   const categories = useSelector((state) => state.category.categories);
   const selectedCategory = useSelector((state) => state.category.selectedCategory);
   const selectedSubCategory = useSelector((state) => state.category.selectedSubCategory)
-  const subCategories = categories[selectedCategory] || []; 
+  const subCategories = categories[selectedCategory].subCategory || []; 
   const dispatch = useDispatch();
 ;
 
