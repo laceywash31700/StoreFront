@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import {
   Dialog,
@@ -15,15 +15,22 @@ import {
   Typography,
 } from "@mui/material";
 import cartSlice from "../../store/cart";
-``
+import Checkout from '../Checkout/index';
+
 function Cart({ open, handleClose }) {
+  
   const cartItems = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const handleRemoveFromCart = (id, quantity) => {
     dispatch(cartSlice.actions.removeFromCart({ id, quantity }));
   };
+  const [checkout, setCheckout] = useState(false);
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
 
+  const handleCheckout = () => {
+    setCheckout(!checkout);
+  }
+  
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Checkout</DialogTitle>
@@ -63,12 +70,13 @@ function Cart({ open, handleClose }) {
         <Typography variant="h6" gutterBottom>
           Total: ${total.toFixed(2)}
         </Typography>
+        {checkout && <Checkout/>}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Close
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleCheckout} color="primary">
           Checkout
         </Button>
       </DialogActions>
