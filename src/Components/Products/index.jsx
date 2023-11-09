@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
-import { Link, Route} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Card,
@@ -81,17 +81,21 @@ function Products() {
                 <Typography variant="h6" gutterBottom>
                   Price: ${product.price.toFixed(2)}
                 </Typography>
-                <div style={{display:"flex"}}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Add to Cart
-                </Button>
-                <Link to={`/products/${product.id}`}>
-                  <Button variant="contained"  color="primary">Product Details</Button>
-                </Link></div>
+                <div style={{ display: "flex", padding: "10px" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleAddToCart(product)}
+                    style={{ marginRight: "10px" }}
+                  >
+                    Add to Cart
+                  </Button>
+                  <Link to={`/products/${product.id}`}>
+                    <Button variant="contained" color="primary">
+                      Product Details
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </Grid>
